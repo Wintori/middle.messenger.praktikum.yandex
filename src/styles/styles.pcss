@@ -1,0 +1,41 @@
+@import "./variables.pcss";
+@import "./normalize.pcss";
+
+@import "../partials/modal-overlay/modal-overlay.pcss";
+@import "../partials/modal/modal.pcss";
+@import "../partials/login/login.pcss";
+@import "../partials/button/button.pcss";
+@import "../partials/registration/registration.pcss";
+@import "../partials/chatBar/chat-bar.pcss";
+@import "../partials/chat/chat.pcss";
+@import "../partials/popup/popup.pcss";
+@import "../partials/modal-add-user/modal-add-user.pcss";
+@import "../partials/profile/profile.pcss";
+@import "../partials/modal-upload-avatar/modal-upload-avatar.pcss";
+
+hr {
+    background: #eaeaea;
+    height: 2px;
+    margin: 2px;
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    max-height: 100vh;
+    background-color: var(--white);
+    display: flex;
+    &__list {
+        flex-direction: column;
+    }
+}
