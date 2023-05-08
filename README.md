@@ -23,7 +23,7 @@
 
 ### Деплой проекта на Netlify
 
-Проект выложен на Netlify: [Click]()
+Проект выложен на Netlify: [Click](https://deploy--zingy-jalebi-9879af.netlify.app/)
 
 ### Установка и запуск
 
