@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "parcel --no-cache ./src/pages/index.hbs",
     "start": "parcel build ./src/pages/index.hbs && node ./src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build src/index.hbs"
   },
   "keywords": [],
   "author": "Egor Shashurin",
