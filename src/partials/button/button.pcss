@@ -13,11 +13,11 @@
         font-weight: 500;
         font-size: 11px;
         line-height: 11px;
-        color: #3369F3;
+        color: var(--ultramarine-blue);
     }
 
     &__authorize {
-        background-color: #3369F3;
+        background-color: var(--ultramarine-blue);
         border-radius: 8px;
         width: 280px;
         transition: opacity .2s linear;
@@ -25,14 +25,14 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 13px;
-        color: white;
+        color: var(--white);
     }
 
     &__profile {
         font-weight: 500;
         font-size: 12px;
         line-height: 12px;
-        color: #999999;
+        color: var(--spanish-gray);
         display: flex;
         align-content: center;
         align-self: flex-end;
@@ -48,7 +48,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #E5E5E5;
+        background-color: var(--platinum);
     }
 
     &__chat-upload {
@@ -60,7 +60,7 @@
         width: 28px;
         height: 28px;
         border-radius: 100%;
-        background-color: #3369F3;
+        background-color: var(--ultramarine-blue);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -73,7 +73,7 @@
         border-radius: 100px;
         position: absolute;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border: none;
         cursor: pointer;
         transition: opacity .2s linear;
@@ -91,21 +91,21 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 13px;
-        color: #3369F3;
+        color: var(--ultramarine-blue);
     }
 
     &__change-password {
         font-weight: 500;
         font-size: 13px;
         line-height: 13px;
-        color: #3369F3;
+        color: var(--ultramarine-blue);
     }
 
     &__exit {
         font-weight: 500;
         font-size: 13px;
         line-height: 13px;
-        color: #FF0000;
+        color: var(--red);
     }
 
     &__close-profile {
@@ -113,8 +113,8 @@
         left: 0;
         height: 100%;
         width: 64px;
-        border-right: 1px solid #EAEAEA;
-        background-color: #FBFBFB;
+        border-right: 1px solid var(--gray-line);
+        background-color: var(--lotion);
         align-self: flex-start;
         display: flex;
         flex-direction: column;
@@ -125,12 +125,22 @@
         width: 28px;
         height: 28px;
         border-radius: 100%;
-        background-color: #3369F3;
+        background-color: var(--ultramarine-blue);
         display: flex;
         justify-content: center;
         align-items: center;
         align-self: flex-end;
         margin: 0 auto;
         transform: rotate(-180deg);
+    }
+
+    &__close {
+        height: 32px;
+        width: 32px;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: -40px;
+        right: -40px;
     }
 }
