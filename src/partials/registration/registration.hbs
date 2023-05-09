@@ -1,37 +1,39 @@
 <div class="modal-overlay">
     <div class="modal">
         <div class="registration">
-            <h1 class="registration__title">Регистрация</h1>
-            <label class="registration__label" for="emailInput">
-                Почта
-                <input class="registration__input" type="email" name="loginInput" required/>
-            </label>
-            <label class="registration__label" for="loginInput">
-                Логин
-                <input class="registration__input" type="text" name="loginInput" required/>
-            </label>
-            <label class="registration__label" for="nameInput">
-                Имя
-                <input class="registration__input" type="text" name="nameInput" required/>
-            </label>
-            <label class="registration__label" for="surnameInput">
-                Фамилия
-                <input class="registration__input" type="text" name="surnameInput" required/>
-            </label>
-            <label class="registration__label" for="phoneInput">
-                Телефон
-                <input class="registration__input" type="tel" name="phoneInput" required/>
-            </label>
-            <label class="registration__label" for="passwordInput">
-                Пароль
-                <input class="registration__input" type="password" name="passwordInput" required/>
-            </label>
-            <label class="registration__label" for="passwordRepeatInput">
-                Пароль (ещё раз)
-                <input class="registration__input" type="password" name="passwordRepeatInput" required/>
-            </label>
-            <a href="./authorization.hbs" class="button button__authorize">Зарегистрироваться</a>
-            <a href="./authorization.hbs" class="button button__registration">Войти</a>
+            <form class="registration__form">
+                <h1 class="registration__title">Регистрация</h1>
+                <label class="registration__label" for="email">
+                    Почта
+                    <input class="registration__input" type="email" name="email" required/>
+                </label>
+                <label class="registration__label" for="login">
+                    Логин
+                    <input class="registration__input" type="text" name="login" required/>
+                </label>
+                <label class="registration__label" for="first_name">
+                    Имя
+                    <input class="registration__input" type="text" name="first_name" required/>
+                </label>
+                <label class="registration__label" for="second_name">
+                    Фамилия
+                    <input class="registration__input" type="text" name="second_name" required/>
+                </label>
+                <label class="registration__label" for="phone">
+                    Телефон
+                    <input class="registration__input" type="tel" name="phone" required/>
+                </label>
+                <label class="registration__label" for="password">
+                    Пароль
+                    <input class="registration__input" type="password" name="password" required/>
+                </label>
+                <label class="registration__label" for="password">
+                    Пароль (ещё раз)
+                    <input class="registration__input" type="password" name="password" required/>
+                </label>
+                <a href="./authorization.hbs" class="button button__authorize">Зарегистрироваться</a>
+                <a href="./authorization.hbs" class="button button__registration">Войти</a>
+            </form>
         </div>
     </div>
 </div>
