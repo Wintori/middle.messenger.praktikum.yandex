@@ -23,10 +23,11 @@
 
 ### Деплой проекта на Netlify
 
-Проект выложен на Netlify: [Click]()
+Проект выложен на Netlify: [Click](https://deploy--zingy-jalebi-9879af.netlify.app/)
 
 ### Установка и запуск
 
 - `npm install` — установка стабильной версии,
 - `npm run dev` — Сборка проекта с наблюдением за файлами и запуск статического сервера на Express, на порту 3000. http://localhost:3000,
-- `npm run start` — Выполняется сборка и запуск статического сервера на Express, на порту 3000. http://localhost:3000.
+- `npm run start` — Выполняется сборка и запуск статического сервера на Express, на порту 3000. http://localhost:3000,
+- `npm run build` — Сборка проекта при помощи Parcel.
