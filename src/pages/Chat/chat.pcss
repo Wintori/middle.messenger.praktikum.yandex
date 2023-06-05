@@ -25,7 +25,7 @@
         display: flex;
         justify-content: space-between;
         margin: 0;
-        padding: 0 0 10px 0;
+        padding: 0 0 10px;
         border-bottom: 1px solid var(--gray-line);
         align-items: center;
 
@@ -86,18 +86,18 @@
         }
 
         &__message-text {
-            margin: 10px 0 0 0;
+            margin: 10px 0 0;
             padding: 0;
             display: flex;
             width: 100%;
 
             &_owner {
-                margin: 10px 0 0 0;
+                margin: 10px 0 0;
                 justify-content: flex-end;
             }
 
             &_owner:first-of-type {
-                margin: 30px 0 0 0;
+                margin: 30px 0 0;
                 justify-content: flex-end;
             }
 
@@ -117,6 +117,10 @@
                 border-radius: 12px;
                 background-color: var(--cultured-white);
                 position: relative;
+
+                &_owner {
+                    background-color: var(--ocean);
+                }
             }
 
             &__time {
@@ -142,14 +146,14 @@
         }
 
         &__message-photo {
-            margin: 10px 0 0 0;
+            margin: 10px 0 0;
             padding: 0;
             display: flex;
             width: 100%;
             overflow: hidden;
 
             &_owner {
-                margin: 10px 0 0 0;
+                margin: 10px 0 0;
                 justify-content: flex-end;
             }
 
@@ -168,7 +172,7 @@
             &__info {
                 display: flex;
                 position: absolute;
-                background: rgba(82, 82, 82, 0.5);
+                background: rgb(82 82 82 / 50%);
                 border-radius: 30px;
                 margin: 0;
                 padding: 2px 7px;
@@ -200,7 +204,7 @@
         display: flex;
         gap: 10px;
         margin: 0;
-        padding: 10px 0 0 0;
+        padding: 10px 0 0;
         border-top: 1px solid var(--gray-line);
         position: relative;
         align-items: flex-end;
@@ -232,7 +236,7 @@
             overflow-y: scroll;
         }
 
-        &__input[contenteditable=true]:empty:not(:focus):before {
+        &__input[contenteditable="true"]:empty:not(:focus)::before {
             content: attr(placeholder);
             color: var(--spanish-gray);
         }
@@ -250,8 +254,4 @@
             height: 28px;
         }
     }
-}
-
-.chat__messages__message-text_owner .chat__messages__message-text__text {
-    background-color: var(--ocean);
 }
