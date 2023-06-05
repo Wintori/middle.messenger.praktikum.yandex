@@ -1,0 +1,25 @@
+{{#if isImage}}
+
+{{#if status.isViewed}}
+<img class="chat__messages__message-photo__status" src="{{statusViewed}}" alt="" />
+{{else if status.isChecked}}
+<img class="chat__messages__message-photo__status" src="{{statusDoubleCheckImage}}" alt="" />
+{{else if status.isPending}}
+<img class="chat__messages__message-photo__status" src="{{statusCheckImage}}" alt="" />
+{{else}}
+<img class="chat__messages__message-photo__status" src="{{statusClockImage}}" alt="" />
+{{/if}}
+
+{{else}}
+
+{{#if status.isViewed}}
+<img class="chat__messages__message-text__status" src="{{statusViewed}}" alt="" />
+{{else if status.isChecked}}
+<img class="chat__messages__message-text__status" src="{{statusDoubleCheck}}" alt="" />
+{{else if status.isPending}}
+<img class="chat__messages__message-text__status" src="{{statusCheck}}" alt="" />
+{{else}}
+<img class="chat__messages__message-text__status" src="{{statusClock}}" alt="" />
+{{/if}}
+
+{{/if}}

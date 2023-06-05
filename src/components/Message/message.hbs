@@ -1,0 +1,59 @@
+{{#if messageText }}
+    {{#if isOwner}}
+    <li class="chat__messages__message-text chat__messages__message-text_owner">
+        <div class="chat__messages__message-text__container">
+            <p class="chat__messages__message-text__text">
+                {{messageText}}
+            </p>
+            <div class="chat__messages__message-text__info">
+                {{{messageStatus}}}
+                <p class="chat__messages__message-text__time">
+                    {{time}}
+                </p>
+            </div>
+        </div>
+    </li>
+    {{else}}
+    <li class="chat__messages__message-text">
+        <div class="chat__messages__message-text__container">
+            <p class="chat__messages__message-text__text">
+                {{messageText}}
+            </p>
+            <div class="chat__messages__message-text__info">
+                <p class="chat__messages__message-text__time">
+                    {{time}}
+                </p>
+            </div>
+        </div>
+    </li>
+    {{/if}}
+{{else}}
+    {{#if isOwner}}
+    <li class="chat__messages__message-photo chat__messages__message-photo_owner">
+        <div class="chat__messages__message-photo__container">
+            <a href="./zoom">
+                <img class="chat__messages__message-photo__image" src="{{image}}" alt="Изображение" />
+            </a>
+            <div class="chat__messages__message-photo__info">
+                {{{messageStatus}}}
+                <p class="chat__messages__message-photo__time">
+                    {{time}}
+                </p>
+            </div>
+        </div>
+    </li>
+    {{else}}
+    <li class="chat__messages__message-photo">
+        <div class="chat__messages__message-photo__container">
+            <a href="./zoom">
+                <img class="chat__messages__message-photo__image" src="{{image}}" alt="Изображение" />
+            </a>
+            <div class="chat__messages__message-photo__info">
+                <p class="chat__messages__message-photo__time">
+                    {{time}}
+                </p>
+            </div>
+        </div>
+    </li>
+    {{/if}}
+{{/if}}
