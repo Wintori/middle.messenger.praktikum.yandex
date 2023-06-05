@@ -1,0 +1,21 @@
+<li class="chat-bar__chat-list__item">
+    <a class="chat-bar__chat-list__wrapper" href="/chat">
+        {{#if avatar}}
+        <img class="chat-bar__chat-list__image" src="{{avatar}}" alt="Фото профиля" />
+        {{else}}
+        <img class="chat-bar__chat-list__image" src="{{noAvatar}}" alt="Нет фото" />
+        {{/if}}
+        <div class="chat-bar__chat-list__information">
+            <p class="chat-bar__chat-list__information_name">{{name}}</p>
+            <p class="chat-bar__chat-list__information_text">{{lastMessage}}</p>
+        </div>
+        <p class="chat-bar__chat-list__date">
+            {{timestamp}}
+        </p>
+        {{#if countOfNew}}
+        <div class="chat-bar__chat-list__count">
+            {{countOfNew}}
+        </div>
+        {{/if}}
+    </a>
+</li>
