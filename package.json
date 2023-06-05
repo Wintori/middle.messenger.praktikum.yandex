@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "parcel --no-cache ./src/index.html",
-    "start": "parcel build ./src/index.html && node ./src/server.js",
+    "start": "parcel build ./src/index.html && node ./src/server.js --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel build ./src/index.html --no-cache"
   },
   "keywords": [],
   "author": "Egor Shashurin",
