@@ -148,6 +148,7 @@ class Block<P extends Record<string, any> = any> {
     const newElement = fragment.firstElementChild as HTMLElement;
 
     if (this._element && newElement) {
+      this._removeEvents();
       this._element.replaceWith(newElement);
     }
 
