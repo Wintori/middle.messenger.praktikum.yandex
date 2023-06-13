@@ -1,20 +1,19 @@
-@import "./variables.pcss";
-@import "./normalize.pcss";
-@import "./fonts.pcss";
+@import url("./variables.pcss");
+@import url("./normalize.pcss");
+@import url("./fonts.pcss");
+@import url("../components/Modal/modal-overlay.pcss");
+@import url("../components/Modal/modal.pcss");
+@import url("../pages/Login/login.pcss");
+@import url("../components/Button/button.pcss");
+@import url("../pages/Registration/registration.pcss");
+@import url("../components/ChatBar/chat-bar.pcss");
+@import url("../components/Popup/popup.pcss");
+@import url("../pages/ChatAddUser/modal-add-user.pcss");
+@import url("../pages/Profile/profile.pcss");
+@import url("../pages/UploadAvatar/modal-upload-avatar.pcss");
+@import url("../pages/ChatZoomImage/modal-zoom-image.pcss");
+@import url('../pages/Chat/chat.pcss');
 
-@import "../partials/modal-overlay/modal-overlay.pcss";
-@import "../partials/modal/modal.pcss";
-@import "../partials/login/login.pcss";
-@import "../partials/button/button.pcss";
-@import "../partials/registration/registration.pcss";
-@import "../partials/chatBar/chat-bar.pcss";
-@import "../partials/chat/chat.pcss";
-@import "../partials/popup/popup.pcss";
-@import "../partials/modal-add-user/modal-add-user.pcss";
-@import "../partials/profile/profile.pcss";
-@import "../partials/modal-upload-avatar/modal-upload-avatar.pcss";
-@import "../partials/modal-zoom-image/modal-zoom-image.pcss";
-@import "../partials/error-page/error-page.pcss";
 
 :active, :hover, :focus {
     outline: 0;
@@ -32,15 +31,13 @@ body {
     max-height: 100vh;
     background-color: var(--white);
     display: flex;
-    font-family: 'Inter', 'Arial', sans-serif;
+    font-family: Inter, Arial, sans-serif;
     font-weight: normal;
     font-style: normal;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizelegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 
     &__list {
         flex-direction: column;

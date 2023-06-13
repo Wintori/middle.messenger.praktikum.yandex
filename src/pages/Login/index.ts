@@ -1,0 +1,106 @@
+import { Button } from "../../components/Button";
+import { Input } from "../../components/input/input";
+import Block from "../../utils/Block";
+import template from './login.hbs'
+
+interface LoginPageProps {
+    title: string;
+}
+
+export class LoginPage extends Block {
+    constructor(props: LoginPageProps) {
+        super(props)
+    }
+
+    protected init(): void {
+
+        this.children.inputLogin = new Input({
+            type: 'text',
+            events: {
+                change: (evt) => {
+                    const regExLogin = /^[A-Za-z]+[A-Za-z0-9_-]{3,20}[A-Za-z0-9]?$/;
+                    const value = evt.target.value;
+                    (this.children.inputLogin as Block).setProps({ value })
+                    if (!regExLogin.test(value)) {
+                        (this.children.inputLogin as Block).setProps({ error: 'Неверный логин' });
+                    } else {
+                        (this.children.inputLogin as Block).setProps({ error: "" })
+                    }
+                },
+            },
+            label: 'Логин',
+            value: this.props.login,
+            labelStyle: 'login__label',
+            inputStyle: 'login__input',
+            errorStyle: 'login__input-error',
+            name: 'login'
+        });
+        this.children.inputPassword = new Input({
+            type: "password",
+            events: {
+                change: (evt) => {
+                    const regExpPassword = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/;
+                    const value = evt.target.value;
+                    (this.children.inputPassword as Block).setProps({ value })
+                    if (!regExpPassword.test(value)) {
+                        (this.children.inputPassword as Block).setProps({ error: 'Пароль должен состоять от 8 до 40 символов, хотя бы одна заглавная буква и цифрат' });
+                    } else {
+                        (this.children.inputPassword as Block).setProps({ error: "" })
+                    }
+                },
+            },
+            label: 'Пароль',
+            value: this.props.password,
+            labelStyle: 'login__label',
+            inputStyle: 'login__input',
+            errorStyle: 'login__input-error',
+            name: 'password'
+        });
+        this.children.buttonLogin = new Button({
+            label: "Авторизоваться",
+            events: {
+                click: (evt: PointerEvent) => {
+                    evt.preventDefault();
+                    const login = ((this.children.inputLogin as Block).element?.firstElementChild as HTMLInputElement).value;
+                    const password = ((this.children.inputPassword as Block).element?.firstElementChild as HTMLInputElement).value;
+                    const regExLogin = /^[A-Za-z]+[A-Za-z0-9_-]{3,20}[A-Za-z0-9]?$/;
+                    const regExpPassword = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/;
+
+
+                    if (!regExLogin.test(login)) {
+                        (this.children.inputLogin as Block).setProps({ error: 'Неверный логин' })
+                    } else if (!regExpPassword.test(password)) {
+                        (this.children.inputPassword as Block).setProps({ error: 'Пароль должен состоять от 8 до 40 символов, хотя бы одна заглавная буква и цифра' });
+                        (this.children.inputLogin as Block).setProps({ error: "" })
+                    }
+                    else {
+                        (this.children.inputLogin as Block).setProps({ error: "" });
+                        (this.children.inputPassword as Block).setProps({ error: "" });
+
+                        console.log(login + '\n' + password)
+                        window.location.pathname = "/chat";
+                    }
+
+                }
+            },
+            buttonStyle: 'button__authorize',
+            type: 'button'
+        });
+        this.children.buttonRegistration = new Button({
+            label: "Нет аккаунта?",
+            events: {
+                click: (evt: PointerEvent) => {
+                    evt.preventDefault();
+                    window.location.pathname = '/registration'
+                }
+            },
+            buttonStyle: 'button__registration',
+            type: 'button'
+        });
+
+    }
+
+    protected render(): DocumentFragment {
+        return this.compile(template, this.props);
+    }
+}

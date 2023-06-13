@@ -1,0 +1,11 @@
+{{#if label }}
+<label class="{{labelStyle}}">
+    {{label}}
+    <input class="{{inputStyle}}" type="{{type}}" name="{{name}}" value="{{value}}" placeholder="{{placeholder}}" {{#if readonly}}readonly{{/if}}  {{#if required}}required{{/if}} />
+    {{#if error}}
+    <span class="{{errorStyle}}">{{error}}</span>
+    {{/if}}
+</label>
+{{else}}
+<input class="{{inputStyle}}" type="{{type}}" name="{{name}}" value="{{value}}" placeholder="{{placeholder}}" />
+{{/if}}

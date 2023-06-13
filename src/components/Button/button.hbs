@@ -1,0 +1,14 @@
+{{#if image }}
+<button class="{{ buttonStyle }}" type="{{ type }}">
+    {{ label }}
+    {{#if label}}
+    <img class="{{ imageStyle }}" src="{{ image }}" alt="{{ label }}" />
+    {{else}}
+    <img class="{{ imageStyle }}" src="{{ image }}" alt="Кнопка" />
+    {{/if}}
+</button>
+{{else}}
+<button class="{{ buttonStyle }}" type="{{ type }}">
+    {{ label }}
+</button>
+{{/if}}

@@ -1,0 +1,48 @@
+<main class="container">
+    <section class="profile">
+        <div class="profile__container">
+            <div class="profile__image-container">
+                <img class="profile__avatar" alt="Аватарка" />
+                <a type="button" class="button button__avatar" href="./uploadAvatar.hbs">
+                    <p class="profile__avatar-edit">
+                        Поменять аватар
+                    </p>
+                </a>
+            </div>
+            <h1 class="profile__name">{{userName}}</h1>
+            <div class="profile__info">
+                <form class="profile__info__form">
+                    {{#each profileInputs}}
+                    {{{this}}}
+                    {{/each}}
+                </form>
+            </div>
+
+            <div class="profile__button-container">
+                <div class="profile__button-container__wrapper">
+                    {{{buttonChange}}}
+                </div>
+                <div class="profile__button-container__wrapper">
+                    {{{buttonPassword}}}
+                </div>
+                <div class="profile__button-container__wrapper">
+                    {{{buttonExit}}}
+                </div>
+            </div>
+
+        </div>
+        {{{buttonBack}}}
+    </section>
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-upload-avatar modal-upload-avatar_error">
+                <form class="modal-upload-avatar__form">
+                    <p class="modal-upload-avatar__title">Загрузите файл</p>
+                    {{{inputFile}}}
+                    {{{buttonUpload}}}
+                    <span class="modal__input-error input-file-error">Нужно выбрать файл</span>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

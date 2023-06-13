@@ -1,0 +1,36 @@
+<main class="container">
+    <section class="profile">
+        <div class="profile__container">
+            <div class="profile__image-container">
+                <img class="profile__avatar" alt="Аватарка" />
+                <a type="button" class="button button__avatar" href="./profile/uploadAvatar">
+                    <p class="profile__avatar-edit">
+                        Поменять аватар
+                    </p>
+                </a>
+            </div>
+            <h1 class="profile__name">{{userName}}</h1>
+            <div class="profile__info">
+                <form class="profile__info__form">
+                    {{#each profileInputs}}
+                    {{{this}}}
+                    {{/each}}
+                </form>
+            </div>
+
+            <div class="profile__button-container">
+                <div class="profile__button-container__wrapper">
+                    {{{buttonChange}}}
+                </div>
+                <div class="profile__button-container__wrapper">
+                    {{{buttonPassword}}}
+                </div>
+                <div class="profile__button-container__wrapper">
+                    {{{buttonExit}}}
+                </div>
+            </div>
+
+        </div>
+        {{{buttonBack}}}
+    </section>
+</main>

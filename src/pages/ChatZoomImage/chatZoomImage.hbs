@@ -1,0 +1,35 @@
+<main class="container">
+    {{{chatBar}}}
+    <section class="chat">
+        <div class="chat__content">
+            {{{chatHeader}}}
+            <div class="chat__messages">
+                {{#each chatMessagesGroups}}
+                {{{this}}}
+                {{/each}}
+            </div>
+            <div class="chat__footer">
+                <div class="chat__footer__button-container">
+                    {{{buttonUpload}}}
+                </div>
+                <form class="chat__footer__form">
+                    {{!-- Решение не использовать стандартный input обусловлено удобством и красотой для ввода
+                    многострочного текста --}}
+                    {{{inputMessage}}}
+                    {{{buttonSend}}}
+                </form>
+            </div>
+        </div>
+    </section>
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-zoom-image">
+                {{{buttonClose}}}
+                <img class="modal-zoom-image__image"
+                    src="{{zoomedImage}}"
+                    alt="Image">
+            </div>
+        </div>
+    </div>
+
+</main>
