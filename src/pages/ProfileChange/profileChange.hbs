@@ -1,28 +1,26 @@
 <main class="container">
-    <section class="profile">
-        <div class="profile__container">
-            <div class="profile__image-container">
-                <img class="profile__avatar" alt="Аватарка" />
-                <a type="button" class="button button__avatar" href="./uploadAvatar.hbs">
-                    <p class="profile__avatar-edit">
-                        Поменять аватар
-                    </p>
-                </a>
-            </div>
-            <div class="profile__info profile__info_change">
-                <form class="profile__info__form">
-                    {{{inputEmail}}}
-                    {{{inputLogin}}}
-                    {{{inputName}}}
-                    {{{inputSurname}}}
-                    {{{inputNickName}}}
-                    {{{inputPhone}}}
-                </form>
-            </div>
-
-            {{{buttonSave}}}
-
-        </div>
-        {{{buttonBack}}}
-    </section>
+  <section class="profile">
+    <div class="profile__container">
+      <div class="profile__image-container">
+        <img class="profile__avatar" 
+          src="{{image}}" 
+          alt="Аватар"
+        />
+        {{{buttonUpload}}}
+      </div>
+      <div class="profile__info profile__info_change">
+        <form class="profile__info__form">
+          {{{inputEmail}}}
+          {{{inputLogin}}}
+          {{{inputName}}}
+          {{{inputSurname}}}
+          {{{inputDisplayName}}}
+          {{{inputPhone}}}
+        </form>
+      </div>
+      {{{buttonSave}}}
+    </div>
+    {{{buttonBack}}}
+  </section>
+  {{{modalUploadAvatar}}}
 </main>
