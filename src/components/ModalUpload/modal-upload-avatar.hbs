@@ -1,0 +1,15 @@
+<div class="modal-overlay {{#if isDisabled}}hide{{/if}}">
+  <div class="modal">
+    <div class="modal-upload-avatar modal-upload-avatar_error">
+      <form class="modal-upload-avatar__form">
+        <p class="modal-upload-avatar__title">{{fileStatus}}</p>
+        {{{inputFile}}}
+        <p class="{{fileNameStyle}}">{{fileName}}</p>
+        {{{buttonUpload}}}
+        {{#if isError}}
+          <span class="modal__input-error input-file-error">Нужно выбрать файл</span> 
+        {{/if}}
+      </form>
+    </div>
+  </div>
+</div>

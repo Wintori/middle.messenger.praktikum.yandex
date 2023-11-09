@@ -1,29 +1,32 @@
-import Block from '../../utils/Block';
+import Block from '../../core/Block';
 import { MessagesStatus } from '../MessageStatus';
 import template from './message.hbs'
 
 export interface MessageProps {
-    messageText?: string;
-    time: string;
-    isOwner?: boolean;
-    image?: string;
-    status?: object;
+  content?: string;
+  time: string;
+  isOwner?: boolean;
+  image?: string;
+  userId?: string;
+  isRead?: boolean;
 }
 
 export class Message extends Block {
-    constructor(props: MessageProps) {
-        super(props);
-    }
+  constructor(props: MessageProps) {
+    super(props);
+  }
 
-    init() {
-        this.children.messageStatus = new MessagesStatus({
-            status: this.props.status,
-            isImage: !!this.props.image
-        })
-    }
+  init() {
+    this.props.isOwner = this.props.userId === window.store.getState().user?.id;
 
-    render() {
-        // В проект должен быть ваш собственный шаблонизатор
-        return this.compile(template, this.props);
-    }
+    this.props.time = `${new Date(this.props.time).getHours()}:${new Date(this.props.time).getMinutes() < 10 ? '0' : ''}${new Date(this.props.time).getMinutes()}`;
+    this.children.messageStatus = new MessagesStatus({
+      status: this.props.isRead,
+      isImage: !!this.props.image
+    })
+  }
+
+  render() {
+    return this.compile(template, this.props);
+  }
 }

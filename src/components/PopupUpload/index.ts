@@ -1,12 +1,16 @@
-import Block from '../../utils/Block';
+import Block from '../../core/Block';
 import template from './popupUpload.hbs';
-import imagePopup from '../../assets/image-popup.svg'
-import filePopup from '../../assets/file-popup.svg'
-import locationPopup from '../../assets/location-popup.svg'
+import imagePopup from '../../assets/image-popup.svg';
+import filePopup from '../../assets/file-popup.svg';
+import locationPopup from '../../assets/location-popup.svg';
+
+interface PopupUploadProps {
+    isDisabled: boolean;
+}
 
 export class PopupUpload extends Block {
-    constructor() {
-        super();
+    constructor(props: PopupUploadProps) {
+        super(props);
     }
 
     init() {
@@ -16,7 +20,6 @@ export class PopupUpload extends Block {
     }
 
     render() {
-        // В проект должен быть ваш собственный шаблонизатор
         return this.compile(template, this.props);
     }
 }

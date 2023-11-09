@@ -1,63 +1,70 @@
 .popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--white);
-    box-shadow: 0 0 6px rgb(0 0 0 / 14%);
-    border-radius: 12px;
-    z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
+  border-radius: 12px;
+  z-index: 9999;
 
-    &__container {
-        margin: 0;
-        padding: 15px;
-        min-width: 130px;
+  &__container {
+    margin: 0;
+    padding: 15px;
+    min-width: 130px;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__list-item {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.2s linear;
+    text-decoration: none;
+
+    &__image {
+      width: 22px;
+      height: 22px;
     }
 
-    &__list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        margin: 0;
-        padding: 0;
+    &__text {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+      color: var(--black);
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
     }
+  }
 
-    &__list-item {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        cursor: pointer;
-        transition: opacity .2s linear;
-        text-decoration: none;
-
-        &__image {
-            width: 22px;
-            height: 22px;
-        }
-
-        &__text {
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 14px;
-            color: var(--black);
-            margin: 0;
-            padding: 0;
-        }
-    }
-
-    &__list-item:hover {
-        opacity: .6;
-    }
+  &__list-item:hover {
+    opacity: 0.6;
+  }
 }
 
 #popup-upload {
-    position: absolute;
-    top: -150px;
-    left: -10px;
+  position: absolute;
+  top: -150px;
+  left: -10px;
 }
 
 #popup-chat-settings {
-    position: absolute;
-    top: 60px;
-    left: -170px;
+  position: absolute;
+  top: 60px;
+  left: -170px;
+}
+
+#popup-chat-options {
+  position: absolute;
+  top: 40px;
+  left: 115px;
 }

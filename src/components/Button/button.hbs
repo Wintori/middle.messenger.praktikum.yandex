@@ -1,14 +1,39 @@
-{{#if image }}
-<button class="{{ buttonStyle }}" type="{{ type }}">
-    {{ label }}
-    {{#if label}}
-    <img class="{{ imageStyle }}" src="{{ image }}" alt="{{ label }}" />
+{{#if image}}
+  <button class="{{buttonStyle}}" 
+    type="{{type}}"
+  >
+    {{#if isTextRightSide}}
+      {{#if label}}
+        <img class="{{imageStyle}}" 
+          src="{{image}}" 
+          alt="{{label}}"
+        />
+      {{else}}
+        <img class="{{imageStyle}}"
+          src="{{image}}"
+          alt="Кнопка"
+        />
+      {{/if}}
+      <span class="{{textStyle}}">{{label}}</span>
     {{else}}
-    <img class="{{ imageStyle }}" src="{{ image }}" alt="Кнопка" />
+      <span class="{{textStyle}}">{{label}}</span>
+      {{#if label}}
+        <img class="{{imageStyle}}"
+          src="{{image}}"
+          alt="{{label}}"
+        />
+      {{else}}
+        <img class="{{imageStyle}}"
+          src="{{image}}"
+          alt="Кнопка"
+        />
+      {{/if}}
     {{/if}}
-</button>
+  </button>
 {{else}}
-<button class="{{ buttonStyle }}" type="{{ type }}">
-    {{ label }}
-</button>
+  <button class="{{buttonStyle}}" 
+    type="{{type}}"
+  >
+    <span class="{{textStyle}}">{{label}}</span>
+  </button>
 {{/if}}
