@@ -13,6 +13,11 @@ type Options = {
   data?: object | string;
 }
 
+interface DataResponse {
+  response: string
+  status: number
+}
+
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 function queryStringify(data = {}) {
@@ -38,7 +43,6 @@ class HTTPTransport {
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    console.log(options)
     return this.request(url, { ...options, method: METHOD.POST }, options.timeout);
   };
 
@@ -83,14 +87,26 @@ class HTTPTransport {
         xhr.send();
       } else {
         if (typeof FormData === "function" && data instanceof FormData) {
-          console.log(data.get('avatar'))
           xhr.send(data);
         } else {
           xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.send(JSON.stringify(data));
         }
       }
-    });
+    })
+      .then((response) => {
+        try {
+          const parsedResponse = JSON.parse((response as DataResponse)?.response)
+          if ((response as DataResponse)?.status !== 200) {
+            throw Error(parsedResponse.reason)
+          } else {
+            return parsedResponse
+          }
+        } catch (err) {
+          throw Error(err as string)
+        }
+        
+      });
   };
 }
 

@@ -13,12 +13,17 @@ interface ProfileChangeProps {
 }
 
 class ProfileChange extends Block {
+
+  public userImage: string;
+
   constructor(props: ProfileChangeProps) {
     super(props);
 
     if (!this.props.store.state.user) {
       this.props.router.go('/');
     }
+
+    this.userImage = window.store.getState().user?.avatar ?? '';
   }
 
   protected init(): void {
@@ -45,8 +50,10 @@ class ProfileChange extends Block {
         },
       },
       readonly: false,
-      name: 'email'
+      name: 'email',
+      errorStyle: 'profile__input-error',
     });
+
     this.children.inputLogin = new Input({
       type: 'text',
       labelStyle: 'profile__label',
@@ -67,8 +74,10 @@ class ProfileChange extends Block {
         },
       },
       readonly: false,
-      name: 'login'
+      name: 'login',
+      errorStyle: 'profile__input-error'
     });
+
     this.children.inputName = new Input({
       type: 'text',
       labelStyle: 'profile__label',
@@ -89,8 +98,10 @@ class ProfileChange extends Block {
         },
       },
       readonly: false,
-      name: 'firstName'
+      name: 'firstName',
+      errorStyle: 'profile__input-error'
     });
+
     this.children.inputSurname = new Input({
       type: 'text',
       labelStyle: 'profile__label',
@@ -111,8 +122,10 @@ class ProfileChange extends Block {
         },
       },
       readonly: false,
-      name: 'secondName'
+      name: 'secondName',
+      errorStyle: 'profile__input-error'
     });
+
     this.children.inputDisplayName = new Input({
 
       type: 'text',
@@ -135,8 +148,9 @@ class ProfileChange extends Block {
       },
       readonly: false,
       name: 'displayName',
-      errorStyle: 'profile__input-error',
+      errorStyle: 'profile__input-error'
     });
+
     this.children.inputPhone = new Input({
       type: 'tel',
       labelStyle: 'profile__label',
@@ -157,7 +171,8 @@ class ProfileChange extends Block {
         },
       },
       readonly: false,
-      name: 'phone'
+      name: 'phone',
+      errorStyle: 'profile__input-error'
     });
 
     this.children.buttonBack = new Button({
@@ -201,6 +216,11 @@ class ProfileChange extends Block {
 
     this.children.modalUploadAvatar = new ModalUpload({
       isDisabled: true,
+      onImageLoad: () => {
+        setTimeout(() => {
+          this.props.image = window.store.getState().user?.avatar ?? '';
+        }, 1500);
+      }
     });
 
     this.children.buttonUpload = new Button({
@@ -300,6 +320,12 @@ class ProfileChange extends Block {
 
     (this.children.inputPhone as Block).setProps({ error: 'Телефон может содержать только от 10 до 15 цифр и начинаться с плюса' });
     return false;
+  }
+
+  componentDidUpdate(): boolean {
+    this.userImage = window.store.getState().user?.avatar ?? '';
+
+    return true;
   }
 
   protected render(): DocumentFragment {

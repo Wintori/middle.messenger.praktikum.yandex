@@ -55,7 +55,6 @@ export default class Route {
     } else {
       return ~pathname.indexOf(this._pathname);
     }
-
   }
 
   checkAuth() {

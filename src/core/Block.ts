@@ -13,7 +13,7 @@ class Block<P = any> {
     FLOW_CDU: "flow:component-did-update",
     FLOW_CWU: 'flow:component-will-unmount',
     FLOW_RENDER: "flow:render",
-  };
+  } as const
 
   public id = nanoid(6);
   public children: Record<string, Block>;
@@ -113,8 +113,8 @@ class Block<P = any> {
     );
   }
 
-  private _componentDidUpdate(oldProps: any, newProps: any) {
-    if (this.componentDidUpdate(oldProps, newProps)) {
+  private _componentDidUpdate() {
+    if (this.componentDidUpdate()) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
@@ -126,7 +126,7 @@ class Block<P = any> {
 
   public componentWillUnmount() { }
 
-  protected componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate() {
     return true;
   }
 
@@ -141,6 +141,10 @@ class Block<P = any> {
 
   public getProps = () => {
     return this.props;
+  }
+
+  public detectChanges = () => {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props);
   }
 
   get element() {

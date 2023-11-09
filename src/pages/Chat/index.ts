@@ -1,6 +1,6 @@
 import { Button } from '../../components/Button';
 import ChatBar from '../../components/ChatBar';
-import { ChatHeader } from '../../components/ChatHeader';
+import ChatHeader from '../../components/ChatHeader';
 import { ChatMessagesGroupInterface } from '../../components/ChatMessagesGroup';
 import ChatMessagesGroup from '../../components/ChatMessagesGroup';
 import Block from '../../core/Block';
@@ -15,7 +15,7 @@ import { ModalAddUser } from '../../components/ModalAddUser';
 import { PopupUpload } from '../../components/PopupUpload';
 import { Chat } from '../../utils/apiTransformers';
 import { websocketService } from '../../core/WebSocket';
-import { ChatContent } from '../../components/ChatContent';
+import ChatContent from '../../components/ChatContent';
 import { ModalAddChat } from '../../components/ModalAddChat';
 import { ModalChatImageUpload } from '../../components/ModalChatImageUpload';
 import { ModalDeleteUser } from '../../components/ModalDeleteUser';
@@ -41,12 +41,12 @@ class ChatPage extends Block {
       settingsHandler: () => {
         this.props.router.go('/settings');
       },
-      onClickMessageHandler: (chat: Chat) => {
+      onClickMessageHandler: async (chat: Chat) => {
         this.props.currentChat = null;
-        window.store.set({ activeChat: chat });
+        window.store.dispatch({ activeChat: chat })
         this.props.currentChat = chat;
-        this.children.chatHeader.setProps({ name: window.store.getState()?.activeChat?.title ?? '', avatar: window.store.getState().activeChat?.avatar ?? '' });
-        websocketService.open(chat.id);
+        this.children.chatHeader.setProps({ name: window.store.getState()?.activeChat?.title ?? '', avatar: window.store.getState()?.activeChat?.avatar ?? '' });
+        await websocketService.open(chat.id);
 
         setTimeout(() => {
           this.children.chatContent.setProps({ messagesGroups: window.store.getState()?.messages });
@@ -65,6 +65,7 @@ class ChatPage extends Block {
     this.children.chatContent = new ChatContent({});
 
     this.children.chatHeader = new ChatHeader({
+      isDisabled: true,
       addUserHandler: () => {
         this.children.modalAddUser.setProps({ isDisabled: false });
       },
@@ -75,10 +76,12 @@ class ChatPage extends Block {
         window.store.dispatch(removeChat, {
           chatId: window.store.getState().activeChat?.id
         })
-        this.setProps({ currentChat: null });
       },
       uploadChatImage: () => {
         this.children.modalUploadChatAvatar.setProps({ isDisabled: false });
+      },
+      buttonToolsHandler: () => {
+        this.props.isDisabled = !this.props.isDisabled;
       }
     })
 
@@ -145,6 +148,34 @@ class ChatPage extends Block {
     })
 
     this.children.popupUpload = new PopupUpload({ isDisabled: true });
+  }
+
+  componentDidUpdate(): boolean {
+    this.children.chatBar = new ChatBar({
+      settingsHandler: () => {
+        this.props.router.go('/settings');
+      },
+      onClickMessageHandler: async (chat: Chat) => {
+        this.props.currentChat = null;
+        window.store.dispatch({ activeChat: chat })
+        this.props.currentChat = chat;
+        this.children.chatHeader.setProps({ name: window.store.getState()?.activeChat?.title ?? '', avatar: window.store.getState()?.activeChat?.avatar ?? '' });
+        await websocketService.open(chat.id);
+
+        setTimeout(() => {
+          this.children.chatContent.setProps({ messagesGroups: window.store.getState()?.messages });
+        }, 500)
+      },
+      addChatHandler: () => {
+        this.children.modalAddChat.setProps({ isDisabled: false });
+      }
+    });
+
+    this.children.chatHeader.setProps({ name: window.store.getState().activeChat?.title, avatar: window.store.getState().activeChat?.avatar })
+
+    this.children.chatContent = new ChatContent({});
+
+    return true;
   }
 
   render() {

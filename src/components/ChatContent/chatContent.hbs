@@ -1,5 +1,10 @@
 <div class="chat__messages">
-  {{#each messagesContent}}
-    {{{this}}}
-  {{/each}}
+  {{#if messagesContent.length}}
+    {{#each messagesContent}}
+      {{{this}}}
+    {{/each}}
+  {{else}}
+    <p class="chat__messages_empty">У вас нет истории переписки с этим человеком.</p>
+    <p class="chat__messages_empty">Возьмите всё в свои руки 😉</p>
+  {{/if}}
 </div>

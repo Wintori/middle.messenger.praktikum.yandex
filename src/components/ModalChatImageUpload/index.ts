@@ -61,7 +61,7 @@ export class ModalChatImageUpload extends Block {
             this.props.isError = true;
             return;
           }
-          
+
           if (this.props.currentFile) {
             const formData = new FormData();
             formData.append('avatar', this.props.currentFile[0]);
@@ -76,6 +76,20 @@ export class ModalChatImageUpload extends Block {
       type: 'button',
       label: 'Поменять'
     })
+  }
+
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+  
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+  
+  private handleEscKey = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      this.props.isDisabled = true;
+    }
   }
 
   render() {

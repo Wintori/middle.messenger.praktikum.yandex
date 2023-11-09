@@ -20,8 +20,7 @@ type ResponseSignUp = {
 }
 
 export const authAPI = {
-  login: (data: LoginRequestData) =>
-    Fetch.post<APIRequest<never>>('auth/signin', { data }),
+  login: (data: LoginRequestData) => Fetch.post<APIRequest<never>>('auth/signin', { data }),
 
   signUp: (data: SignUpRequestData) => Fetch.post<APIRequest<ResponseSignUp>>('auth/signup', { data }),
 

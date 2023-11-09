@@ -49,6 +49,20 @@ export class ModalAddChat extends Block {
     })
   }
 
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+
+  private handleEscKey = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      this.props.isDisabled = true;
+    }
+  }
+
   render() {
     return this.compile(template, this.props);
   }

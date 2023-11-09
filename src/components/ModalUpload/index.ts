@@ -14,6 +14,7 @@ interface ModalUploadProps {
   isDisabled: boolean;
   isError?: boolean;
   fileStatus?: UploadStatusEnum;
+  onImageLoad?: () => void;
 }
 
 export class ModalUpload extends Block {
@@ -68,12 +69,28 @@ export class ModalUpload extends Block {
           }
 
           this.props.isDisabled = true;
+
+          this.props.onImageLoad();
         }
       },
       buttonStyle: 'button__authorize',
       type: 'button',
       label: 'Поменять'
     })
+  }
+
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+  
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+  
+  private handleEscKey = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      this.props.isDisabled = true;
+    }
   }
 
   render() {

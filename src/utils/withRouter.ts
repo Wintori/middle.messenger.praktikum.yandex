@@ -1,5 +1,5 @@
 import { BlockClass, PathRouter } from '../core';
-import {router} from '../router'
+import { router } from '../router'
 
 type WithRouterProps = { router: PathRouter }
 

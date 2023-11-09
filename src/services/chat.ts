@@ -1,11 +1,12 @@
 import { chatAPI } from '../api/chat';
-import { ChatDTO } from '../api/types';
+import { ChatDTO, UserDTO } from '../api/types';
 import type { Dispatch } from '../core/Store';
 import { AppState } from '../store';
 import { apiHasError } from '../utils';
-import { transformChats, transformChat } from '../utils/apiTransformers';
+import { transformChats, transformChat, Chat } from '../utils/apiTransformers';
 import { websocketService } from '../core/WebSocket';
 import { router } from '../router'
+import { userAPI } from '../api/user';
 
 
 type ChangePayload = {
@@ -32,7 +33,7 @@ type RemoveChat = {
 }
 
 type AddOrRemoveUsersPayload = {
-    users: number[];
+    users: string[];
     chatId: number;
 }
 
@@ -46,13 +47,13 @@ export const getAllChats = async (
     const response = await chatAPI.chats(action);
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+        dispatch({ isLoading: false, loginFormError: response.reason });
         router.go('/500');
         return;
     }
 
     dispatch({ isLoading: false, loginFormError: null });
-    dispatch({ chats: transformChats(JSON.parse(response.response) as ChatDTO[]) });
+    dispatch({ chats: transformChats(response) });
 }
 
 export const createChat = async (
@@ -65,14 +66,25 @@ export const createChat = async (
     const response = await chatAPI.createChat(action);
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
-        console.log(response.response.reason)
-        console.log(response)
+        dispatch({ isLoading: false, loginFormError: response.reason });
         router.go('/500');
         return;
     }
 
-    dispatch({ isLoading: false });
+    dispatch({ isLoading: false, loginFormError: null });
+    const currentChats = window.store.getState().chats;
+    const newChat = {
+        id: response.id,
+        avatar: "",
+        createdBy: window.store.getState().user?.id,
+        lastMessage: "",
+        title: action.title,
+        unreadCount: 0
+    } as Chat;
+
+    currentChats?.unshift(newChat)
+
+    dispatch({ chats: currentChats });
 }
 
 export const removeChat = async (
@@ -85,12 +97,15 @@ export const removeChat = async (
     const response = await chatAPI.deleteChat(action);
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+        dispatch({ isLoading: false, loginFormError: response.reason });
         router.go('/500');
         return;
     }
 
-    dispatch({ isLoading: false });
+    dispatch({ isLoading: false, loginFormError: null });
+    const newChatList = window.store.getState().chats?.filter((chat) => chat.id !== action.chatId);
+
+    dispatch({ chats: newChatList });
 }
 
 export const getOldMessages = async (
@@ -116,13 +131,13 @@ export const avatar = async (
     const response = await chatAPI.avatar(action);
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+        dispatch({ isLoading: false, loginFormError: response.reason });
         router.go('/500');
         return;
     }
 
     dispatch({ isLoading: false, loginFormError: null });
-    dispatch({ activeChat: transformChat(JSON.parse(response.response) as ChatDTO) });
+    dispatch({ activeChat: transformChat(response) });
 }
 
 export const addUser = async (
@@ -132,13 +147,23 @@ export const addUser = async (
 ) => {
     dispatch({ isLoading: true });
 
-    const response = await chatAPI.addUsersToChat(action);
+    const responseSearch = await userAPI.search({ login: action.users[0] });
 
-    if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    if (apiHasError(responseSearch)) {
+        dispatch({ isLoading: false, loginFormError: responseSearch.reason });
         router.go('/500');
         return;
     }
+
+    const userId = Number((responseSearch[0] as UserDTO).id);
+    const response = await chatAPI.addUsersToChat({ users: [userId], chatId: action.chatId });
+
+    if (apiHasError(response)) {
+        dispatch({ isLoading: false, loginFormError: response.reason });
+        router.go('/500');
+        return;
+    }
+
 
     dispatch({ isLoading: false, loginFormError: null });
 }
@@ -150,10 +175,19 @@ export const removeUser = async (
 ) => {
     dispatch({ isLoading: true });
 
-    const response = await chatAPI.deleteUsersFromChat(action);
+    const responseSearch = await userAPI.search({ login: action.users[0] });
+
+    if (apiHasError(responseSearch)) {
+        dispatch({ isLoading: false, loginFormError: responseSearch.reason });
+        router.go('/500');
+        return;
+    }
+
+    const userId = Number((responseSearch[0] as UserDTO).id);
+    const response = await chatAPI.deleteUsersFromChat({ users: [userId], chatId: action.chatId });
 
     if (apiHasError(response)) {
-        dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+        dispatch({ isLoading: false, loginFormError: response.reason });
         router.go('/500');
         return;
     }

@@ -15,23 +15,23 @@ export async function initApp(dispatch: Dispatch<AppState>) {
     const response = await authAPI.me();
 
     if (apiHasError(response)) {
-      dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+      dispatch({ isLoading: false, loginFormError: response.reason });
       router.go('/500');
       return;
     }
 
-    dispatch({ user: transformUser(JSON.parse(response.response) as UserDTO) });
+    dispatch({ user: transformUser(response) });
 
     const responseChat = await chatAPI.chats();
 
     if (apiHasError(responseChat)) {
-      dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+      dispatch({ isLoading: false, loginFormError: responseChat.reason });
       router.go('/500');
       return;
     }
 
     dispatch({ isLoading: false, loginFormError: null });
-    dispatch({ chats: transformChats(JSON.parse(responseChat.response) as ChatDTO[]) });
+    dispatch({ chats: transformChats(responseChat) });
 
 
   } catch (err) {

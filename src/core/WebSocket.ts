@@ -1,15 +1,23 @@
 import { chatAPI } from "../api/chat";
 import { transformMessages, transformMessage } from "../utils/apiTransformers";
-import { groupMessagesByDay } from "../utils/dateGrouping";
+import { Months, groupMessagesByDay } from "../utils/dateGrouping";
 
 
 export default class WebSocketService {
+
   private socket: WebSocket;
   private socketInterval: any;
 
+  constructor() {
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleError = this.handleError.bind(this);
+    this.handleMassage = this.handleMassage.bind(this);
+  }
+
   async open(chatId: number) {
     const tokenResponse = await chatAPI.getToken(chatId);
-    const token = JSON.parse(tokenResponse.response).token
+    const token = tokenResponse.token;
     const userId: number = window.store.getState().user!.id;
 
     if (this.socket) {
@@ -23,10 +31,10 @@ export default class WebSocketService {
   }
 
   private addEvents() {
-    this.getSocket().addEventListener('open', this.handleOpen.bind(this));
-    this.getSocket().addEventListener('message', this.handleMassage.bind(this));
-    this.getSocket().addEventListener('error', this.handleError.bind(this));
-    this.getSocket().addEventListener('close', this.handleClose.bind(this));
+    this.getSocket().addEventListener('open', this.handleOpen);
+    this.getSocket().addEventListener('message', this.handleMassage);
+    this.getSocket().addEventListener('error', this.handleError);
+    this.getSocket().addEventListener('close', this.handleClose);
   }
 
   private removeEvents() {
@@ -77,28 +85,43 @@ export default class WebSocketService {
       return
     }
 
-
     const data = JSON.parse(event.data);
+    
+    let messages = [...window.store.getState()?.messages];
 
-    let messages = { ...window.store.getState().messages };
+
     if (Array.isArray(data)) {
       if (!data.length || !data[0].hasOwnProperty("user_id")) {
+        window.store.dispatch({ messages: [] });
         return
       }
 
       const transformedData = transformMessages(data)
       messages = groupMessagesByDay(transformedData)
+      window.store.dispatch({ messages: messages });
 
     } else if (typeof data === "object" && data?.type === "message") {
       if (!data.hasOwnProperty("user_id")) {
-        return
+        return;
       }
       const transformedData = transformMessage(data)
 
-      messages[0].messages.push({ ...transformedData, chatId: window.store.getState().activeChat!.id, isRead: false })
+      if (messages && messages[0] && messages[0].messages.length) {
+        messages[0].messages.unshift({ ...transformedData, chatId: window.store.getState().activeChat!.id, isRead: true })
+      } else {
+
+        const date = new Date(transformedData.time);
+        const day = `${date.getDate()} ${Months[date.getMonth()]}`;
+        messages = groupMessagesByDay(new Array({ ...transformedData, chatId: window.store.getState().activeChat!.id, isRead: true }))
+
+      }
+
+      window.store.dispatch({ messages: messages });
     }
 
-    window.store.dispatch({ messages });
+
+
+
   }
 
   private handleError = (event: Event) => {

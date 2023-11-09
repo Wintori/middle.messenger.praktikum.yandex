@@ -25,7 +25,6 @@ export class BarMessage extends Block {
     this.props.noAvatar = noAvatar;
     this.props.timestamp = this.props?.lastMessage?.time ? `${new Date(this.props?.lastMessage?.time).getHours()}:${new Date(this.props?.lastMessage?.time).getMinutes() < 10 ? '0' : ''}${new Date(this.props.lastMessage.time).getMinutes()}` : '';
 
-    // Как обновлять эту компоненту при клике на неё? 
     if (this.props.id === window.store.getState().activeChat?.id) {
       this.setProps({ isActive: true })
     }

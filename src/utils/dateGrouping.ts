@@ -5,7 +5,7 @@ export interface GroupedMessages {
     messages: Message[];
 }
 
-enum Months {
+export enum Months {
     "января",
     "февраля",
     "марта",

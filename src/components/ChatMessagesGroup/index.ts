@@ -9,7 +9,6 @@ export interface ChatMessagesGroupInterface {
   messages: MessageProps[];
 }
 
-
 class ChatMessagesGroup extends Block {
   constructor(props: ChatMessagesGroupInterface) {
     super(props);

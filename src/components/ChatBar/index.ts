@@ -10,6 +10,7 @@ import { Chat } from '../../utils/apiTransformers';
 import { PathRouter } from '../../core';
 import { withRouter } from '../../utils/withRouter';
 import { PopupChatOptions } from '../PopupChatOptions';
+import { withStore } from '../../utils/withStore';
 
 
 interface ChatBarInterface {
@@ -62,6 +63,7 @@ class ChatBar extends Block {
 				click: (evt: PointerEvent) => {
 					evt.preventDefault();
 					this.props.addChatHandler();
+					this.props.barMessages = window.store.getState().chats;
 				}
 			},
 			imageStyle: 'button__create-new',
@@ -97,9 +99,24 @@ class ChatBar extends Block {
 		this.children.popupOptions = new PopupChatOptions({ isDisabled: true });
 	}
 
+	componentDidUpdate(): boolean {
+		this.children.barMessagesComponent = this.props.barMessages
+			?.map((props: Chat) => new BarMessage(
+				{
+					...props,
+					events: {
+						click: (evt) => {
+							this.props.onClickMessageHandler(props);
+						},
+					}
+				})) ?? [];
+
+		return true;
+	}
+
 	render() {
 		return this.compile(template, this.props);
 	}
 }
 
-export default withRouter(ChatBar)
+export default withRouter(withStore(ChatBar))

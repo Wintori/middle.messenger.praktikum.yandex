@@ -30,5 +30,5 @@ export const userAPI = {
 
   resources: (path: string) => Fetch.get<APIRequest<never>>(`resources/${path}`),
 
-  search: (data: SearchRequestData) => Fetch.get<APIRequest<UserDTO[]>>(`user/search`)
+  search: (data: SearchRequestData) => Fetch.post<APIRequest<UserDTO[]>>(`user/search`, { data })
 }

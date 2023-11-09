@@ -53,11 +53,12 @@ export default class PathRouter implements CoreRouter {
 
   _onRoute(pathname: string = window.location.pathname) {
     const route = this.getRoute(pathname);
-    console.log(route)
+
     if (!route) {
       this.go('*');
       return;
     }
+
     this._currentRoute?.leave();
     this._currentRoute = route;
     route.render();

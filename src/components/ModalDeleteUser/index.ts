@@ -30,22 +30,39 @@ export class ModalDeleteUser extends Block {
       required: true,
     });
 
-    this.children.buttonAdd = new Button({
+    this.children.buttonRemove = new Button({
       events: {
         click: (evt: PointerEvent) => {
           evt.preventDefault();
           const login = ((this.children.inputLogin as Block).element?.firstElementChild as HTMLInputElement).value;
 
+
           window.store.dispatch(removeUser, {
             users: Array.isArray(login) ? login : [login],
             chatId: window.store.getState().activeChat?.id
           })
+
+          this.props.isDisabled = true;
         }
       },
       buttonStyle: 'button__authorize',
       type: 'button',
-      label: 'Добавить'
+      label: 'Удалить'
     })
+  }
+
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+  
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+  
+  private handleEscKey = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      this.props.isDisabled = true;
+    }
   }
 
   render() {

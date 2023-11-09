@@ -29,7 +29,7 @@ export const login = async (
   const response = await authAPI.login(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
@@ -43,7 +43,7 @@ export const login = async (
     return;
   }
 
-  dispatch({ user: transformUser(JSON.parse(responseUser.response) as UserDTO) });
+  dispatch({ user: transformUser(response) });
 
 
   router.go('/messenger');
@@ -59,7 +59,7 @@ export const signUp = async (
   const response = await authAPI.signUp(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
@@ -73,7 +73,7 @@ export const signUp = async (
     return;
   }
 
-  dispatch({ user: transformUser(JSON.parse(responseUser.response) as UserDTO) });
+  dispatch({ user: transformUser(response) });
 
   router.go('/messenger');
 }

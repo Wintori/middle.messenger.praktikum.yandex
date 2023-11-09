@@ -40,12 +40,28 @@ export class ModalAddUser extends Block {
             users: Array.isArray(login) ? login : [login],
             chatId: window.store.getState().activeChat?.id
           })
+
+          this.props.isDisabled = true;
         }
       },
       buttonStyle: 'button__authorize',
       type: 'button',
       label: 'Добавить'
     })
+  }
+
+  public componentDidMount(): void {
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+
+  public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+
+  private handleEscKey = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      this.props.isDisabled = true;
+    }
   }
 
   render() {

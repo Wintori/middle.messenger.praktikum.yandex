@@ -55,14 +55,16 @@
 
   &__messages {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
     &__date-group {
       list-style: none;
       display: flex;
       flex-direction: column;
       margin: 0;
-      padding: 0;
+      padding: 20px 0 0 0;
       position: relative;
     }
 
@@ -117,6 +119,7 @@
         border-radius: 12px;
         background-color: var(--cultured-white);
         position: relative;
+        white-space: wrap;
 
         &_owner {
           background-color: var(--ocean);
@@ -194,6 +197,17 @@
         width: 9px;
       }
     }
+
+    &_empty {
+      margin: 0 auto;
+      padding: 0;
+      align-self: center;
+      justify-self: center;
+    }
+
+    &_empty:first-child {
+      padding: 5% 0 0 0;
+    }
   }
 
   &__messages::-webkit-scrollbar {
@@ -233,7 +247,7 @@
       line-height: 12px;
       resize: none;
       max-height: 360px;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     &__input[contenteditable="true"]:empty:not(:focus)::before {

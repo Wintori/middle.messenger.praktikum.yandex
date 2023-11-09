@@ -37,14 +37,14 @@ export const change = async (
   const response = await userAPI.change(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
 
   dispatch({ isLoading: false, loginFormError: null });
 
-  dispatch({ user: transformUser(JSON.parse(response.response) as UserDTO) });
+  dispatch({ user: transformUser(response) });
 
   router.go('/settings');
 }
@@ -59,7 +59,7 @@ export const changePassword = async (
   const response = await userAPI.changePassword(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
@@ -79,14 +79,14 @@ export const getUserById = async (
   const response = await userAPI.userById(action.id);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
 
   dispatch({ isLoading: false, loginFormError: null });
 
-  return response.response
+  return response
 }
 
 export const avatar = async (
@@ -99,14 +99,14 @@ export const avatar = async (
   const response = await userAPI.avatar(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
 
   dispatch({ isLoading: false, loginFormError: null });
 
-  dispatch({ user: transformUser(JSON.parse(response.response) as UserDTO) });
+  dispatch({ user: transformUser(response) });
 }
 
 export const search = async (
@@ -119,7 +119,7 @@ export const search = async (
   const response = await userAPI.search(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: JSON.parse(response.response).reason });
+    dispatch({ isLoading: false, loginFormError: response.reason });
     router.go('/500');
     return;
   }
