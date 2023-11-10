@@ -96,7 +96,13 @@ class HTTPTransport {
     })
       .then((response) => {
         try {
+          
+          if (response.response === 'OK') {
+            return { status: 200 };
+          }
+        
           const parsedResponse = JSON.parse((response as DataResponse)?.response)
+         
           if ((response as DataResponse)?.status !== 200) {
             throw Error(parsedResponse.reason)
           } else {

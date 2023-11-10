@@ -34,17 +34,16 @@ export const login = async (
     return;
   }
 
-  const responseUser = await authAPI.me();
-
-  dispatch({ isLoading: false, loginFormError: null });
+  const responseUser = await authAPI.me();  
 
   if (apiHasError(responseUser)) {
+    dispatch({ isLoading: false, loginFormError: 'Выход из системы' });
     dispatch(logout);
     return;
   }
 
-  dispatch({ user: transformUser(response) });
-
+  dispatch({ isLoading: false, loginFormError: null });
+  dispatch({ user: transformUser(responseUser) });
 
   router.go('/messenger');
 };
