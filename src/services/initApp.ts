@@ -11,7 +11,10 @@ export async function initApp(dispatch: Dispatch<AppState>) {
 
   await new Promise(r => setTimeout(r, 100));
 
+  
+
   try {
+
     const response = await authAPI.me();
 
     if (apiHasError(response)) {

@@ -38,21 +38,37 @@ type tokenResponse = {
     token: string
 }
 
-export const chatAPI = {
-    chats: (data?: GetAllChatsRequest) => Fetch.get<APIRequest<ChatDTO[]>>('chats', { data }),
+class ChatAPI {
+    public chats(data?: GetAllChatsRequest) {
+        return Fetch.get<APIRequest<ChatDTO[]>>('chats', { data });
+    }
 
-    createChat: (data: CreateChatRequest) => Fetch.post<APIRequest<never>>('chats', { data }),
+    public createChat(data: CreateChatRequest) {
+        return Fetch.post<APIRequest<never>>('chats', { data });
+    }
 
-    deleteChat: (data: DeleteChatRequest) => Fetch.delete<APIRequest<DeleteResponse>>('chats', { data }),
+    public deleteChat(data: DeleteChatRequest) {
+        return Fetch.delete<APIRequest<DeleteResponse>>('chats', { data });
+    }
 
-    // chatFiles: (data: ChatFiles) => Fetch.get<APIRequest>(`chats/${data}/files`),
+    // chatFiles (data: ChatFiles) {return Fetch.get<APIRequest>(`chats/${data}/files`);}
 
-    addUsersToChat: (data: UserToChatRequest) => Fetch.put<APIRequest<never>>('chats/users', { data }),
+    public addUsersToChat(data: UserToChatRequest) {
+        return Fetch.put<APIRequest<never>>('chats/users', { data });
+    }
 
-    deleteUsersFromChat: (data: UserToChatRequest) => Fetch.delete<APIRequest<never>>('chats/users', { data }),
+    public deleteUsersFromChat(data: UserToChatRequest) {
+        return Fetch.delete<APIRequest<never>>('chats/users', { data });
+    }
 
-    getToken: (chatId: number) => Fetch.post<APIRequest<tokenResponse>>(`chats/token/${chatId}`),
+    public getToken(chatId: number) {
+        return Fetch.post<APIRequest<tokenResponse>>(`chats/token/${chatId}`);
+    }
 
-    avatar: (data: FormData) => Fetch.put<APIRequest<ChatDTO>>('chats/avatar', { data }),
-
+    public avatar(data: FormData) {
+        return Fetch.put<APIRequest<ChatDTO>>('chats/avatar', { data });
+    }
 };
+
+const chatAPI = new ChatAPI();
+export { chatAPI };
