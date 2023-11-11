@@ -19,12 +19,23 @@ type ResponseSignUp = {
   id: number;
 }
 
-export const authAPI = {
-  login: (data: LoginRequestData) => Fetch.post<APIRequest<never>>('auth/signin', { data }),
+class AuthAPI {
+  public login(data: LoginRequestData) {
+    return Fetch.post<APIRequest<never>>('auth/signin', { data });
+  }
 
-  signUp: (data: SignUpRequestData) => Fetch.post<APIRequest<ResponseSignUp>>('auth/signup', { data }),
+  public signUp(data: SignUpRequestData) {
+    return Fetch.post<APIRequest<ResponseSignUp>>('auth/signup', { data });
+  }
 
-  me: () => Fetch.get<APIRequest<UserDTO>>('auth/user'),
+  public me() {
+    return Fetch.get<APIRequest<UserDTO>>('auth/user');
+  }
 
-  logout: () => Fetch.post<APIRequest<never>>('auth/logout'),
+  public logout() {
+    return Fetch.post<APIRequest<never>>('auth/logout');
+  }
 };
+
+const authAPI = new AuthAPI();
+export { authAPI };
