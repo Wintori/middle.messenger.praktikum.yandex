@@ -26,26 +26,31 @@ export const login = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await authAPI.login(action);
+  try {
+    const response = await authAPI.login(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    const responseUser = await authAPI.me();
+
+    if (apiHasError(responseUser)) {
+      dispatch({ isLoading: false, loginFormError: 'Выход из системы' });
+      dispatch(logout);
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+    dispatch({ user: transformUser(responseUser) });
+
+    router.go('/messenger');
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  const responseUser = await authAPI.me();  
-
-  if (apiHasError(responseUser)) {
-    dispatch({ isLoading: false, loginFormError: 'Выход из системы' });
-    dispatch(logout);
-    return;
-  }
-
-  dispatch({ isLoading: false, loginFormError: null });
-  dispatch({ user: transformUser(responseUser) });
-
-  router.go('/messenger');
 };
 
 export const signUp = async (
@@ -55,33 +60,44 @@ export const signUp = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await authAPI.signUp(action);
+  try {
+    const response = await authAPI.signUp(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    const responseUser = await authAPI.me();
+
+    dispatch({ isLoading: false, loginFormError: null });
+
+    if (apiHasError(responseUser)) {
+      dispatch(logout);
+      return;
+    }
+
+    dispatch({ user: transformUser(response) });
+
+    router.go('/messenger');
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  const responseUser = await authAPI.me();
-
-  dispatch({ isLoading: false, loginFormError: null });
-
-  if (apiHasError(responseUser)) {
-    dispatch(logout);
-    return;
-  }
-
-  dispatch({ user: transformUser(response) });
-
-  router.go('/messenger');
 }
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
+  dispatch({ isLoading: true });
+  
+  try {
+    await authAPI.logout();
 
-  await authAPI.logout();
+    dispatch({ user: null });
 
-  dispatch({ user: null });
-
-  router.go('/');
+    router.go('/');
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
+    router.go('/500');
+  }
 };

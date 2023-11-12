@@ -34,19 +34,22 @@ export const change = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await userAPI.change(action);
+  try {
+    const response = await userAPI.change(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+    dispatch({ user: transformUser(response) });
+    router.go('/settings');
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error.message });
     router.go('/500');
-    return;
   }
-
-  dispatch({ isLoading: false, loginFormError: null });
-
-  dispatch({ user: transformUser(response) });
-
-  router.go('/settings');
 }
 
 export const changePassword = async (
@@ -56,18 +59,22 @@ export const changePassword = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await userAPI.changePassword(action);
+  try {
+    const response = await userAPI.changePassword(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+    router.go('/settings');
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  dispatch({ isLoading: false, loginFormError: null });
-
-  router.go('/settings');
-};
+}
 
 export const getUserById = async (
   dispatch: Dispatch<AppState>,
@@ -76,17 +83,22 @@ export const getUserById = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await userAPI.userById(action.id);
+  try {
+    const response = await userAPI.userById(action.id);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+
+    return response
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  dispatch({ isLoading: false, loginFormError: null });
-
-  return response
 }
 
 export const avatar = async (
@@ -96,17 +108,22 @@ export const avatar = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await userAPI.avatar(action);
+  try {
+    const response = await userAPI.avatar(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+
+    dispatch({ user: transformUser(response) });
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  dispatch({ isLoading: false, loginFormError: null });
-
-  dispatch({ user: transformUser(response) });
 }
 
 export const search = async (
@@ -116,13 +133,18 @@ export const search = async (
 ) => {
   dispatch({ isLoading: true });
 
-  const response = await userAPI.search(action);
+  try {
+    const response = await userAPI.search(action);
 
-  if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    if (apiHasError(response)) {
+      dispatch({ isLoading: false, loginFormError: response.reason });
+      router.go('/500');
+      return;
+    }
+
+    dispatch({ isLoading: false, loginFormError: null });
+  } catch (error: any) {
+    dispatch({ isLoading: false, loginFormError: error });
     router.go('/500');
-    return;
   }
-
-  dispatch({ isLoading: false, loginFormError: null });
 }
