@@ -1,20 +1,16 @@
 import { authAPI } from '../api/auth';
 import { chatAPI } from '../api/chat';
-import { ChatDTO, UserDTO } from '../api/types';
 import type { Dispatch } from '../core';
-import { AppState } from '../store';
-import { transformUser, apiHasError } from '../utils';
-import { transformChats } from '../utils/apiTransformers';
 import { router } from '../router';
+import { AppState } from '../store';
+import { apiHasError, transformUser } from '../utils';
+import { transformChats } from '../utils/apiTransformers';
 
 export async function initApp(dispatch: Dispatch<AppState>) {
 
   await new Promise(r => setTimeout(r, 100));
 
-  
-
   try {
-
     const response = await authAPI.me();
 
     if (apiHasError(response)) {
@@ -23,7 +19,16 @@ export async function initApp(dispatch: Dispatch<AppState>) {
       return;
     }
 
-    dispatch({ user: transformUser(response) });
+    const dispatchPromise = new Promise((resolve, reject) => {
+      try {
+        dispatch({ user: transformUser(response) });
+        resolve(true);
+      } catch (err) {
+        reject(err);
+      }
+    });
+
+    await dispatchPromise;
 
     const responseChat = await chatAPI.chats();
 
