@@ -97,7 +97,7 @@ class HTTPTransport {
       .then((response) => {
         try {
           
-          if (response.response === 'OK') {
+          if ((response as DataResponse).response === 'OK') {
             return { status: 200 };
           }
         

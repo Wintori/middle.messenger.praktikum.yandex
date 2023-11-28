@@ -1,5 +1,4 @@
 import Block from '../Block';
-import { Store } from '../Store';
 import renderDOM from '../renderDom';
 
 function isEqual(lhs: any, rhs: any) {
@@ -17,7 +16,8 @@ export default class Route {
   private _block: Block;
   private _props: IRouterProps;
   private _componentProps: any;
-  private _params: {};
+  //@ts-ignore
+  private _params: object = {};
   private _needAuth: boolean;
   private _onUnautorized: any;
   private _redirect: () => void;
@@ -28,7 +28,7 @@ export default class Route {
     props: IRouterProps,
     componentProps: any,
     needAuth: boolean,
-    onUnautorized: boolean,
+    onUnautorized: boolean | (() => void),
     redirect: () => void,
   ) {
     this._pathname = pathname;
@@ -68,6 +68,7 @@ export default class Route {
 
   render() {
     if (this.checkAuth()) {
+      //@ts-ignore
       this._block = new this._blockClass({ ...this._componentProps, routerParams: this.getParams() });
       renderDOM(this._block, this._props.rootQuery);
     } else {

@@ -29,7 +29,7 @@ export default class PathRouter implements CoreRouter {
     return this.__instance;
   }
 
-  use({ pathname, block, props = {}, exact = true, needAuth = false, onUnautorized, redirectPath }: TRouteConstructor) {
+  use({ pathname, block, props = {}, exact = true, needAuth = false, onUnautorized = () => false, redirectPath }: TRouteConstructor) {
     const redirect = () => this.go(redirectPath as string);
     const route = new Route(
       pathname,
@@ -70,11 +70,11 @@ export default class PathRouter implements CoreRouter {
   }
 
   back() {
-    this.history.go(-1);
+    this.history.back();
   }
 
   forward() {
-    this.history.go(1);
+    this.history.forward();
   }
 
   getRoute(pathname: string) {

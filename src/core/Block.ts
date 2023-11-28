@@ -135,6 +135,7 @@ class Block<P = any> {
       return;
     }
 
+    //@ts-ignore
     Object.assign(this.props, nextProps);
     this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
   };
