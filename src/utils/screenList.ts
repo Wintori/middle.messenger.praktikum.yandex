@@ -17,16 +17,16 @@ export enum Screens {
   NotFound = 'error404'
 }
 
-const map: Record<Screens, any> = {
-  [Screens.Login]: Login,
-  [Screens.Chat]: Chat,
-  [Screens.Registration]: Registration,
-  [Screens.Profile]: Profile,
-  [Screens.UpdateUser]: ProfileChange,
-  [Screens.ProfilePassword]: ProfileChangePassword,
-  [Screens.NotFound]: Error404
+const map: Record<Screens, () => Block<any>> = {
+  [Screens.Login]: () => Login,
+  [Screens.Chat]: () => Chat,
+  [Screens.Registration]: () => Registration,
+  [Screens.Profile]: () => Profile,
+  [Screens.UpdateUser]: () => ProfileChange,
+  [Screens.ProfilePassword]: () => ProfileChangePassword,
+  [Screens.NotFound]: () => Error404
 };
 
 export const getScreenComponent = (screen: Screens): Block<any> => {
-  return map[screen];
+  return map[screen]();
 };
