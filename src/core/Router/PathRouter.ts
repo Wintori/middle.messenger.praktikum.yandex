@@ -16,7 +16,7 @@ export default class PathRouter implements CoreRouter {
   private static __instance: PathRouter;
   public history: History;
   private routes: Route[];
-  private _currentRoute: Route;
+  private _currentRoute!: Route;
   private _rootQuery: string;
 
   constructor(rootQuery: string) {

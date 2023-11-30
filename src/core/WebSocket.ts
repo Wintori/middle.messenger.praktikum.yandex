@@ -5,7 +5,7 @@ import { groupMessagesByDay } from "../utils/dateGrouping";
 
 export default class WebSocketService {
 
-  private socket: WebSocket;
+  private socket!: WebSocket;
   private socketInterval: any;
 
   constructor() {

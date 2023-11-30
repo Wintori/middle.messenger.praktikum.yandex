@@ -13,7 +13,7 @@ export interface IRouterProps {
 export default class Route {
   private _pathname: string;
   private _blockClass: Block;
-  private _block: Block;
+  private _block!: Block;
   private _props: IRouterProps;
   private _componentProps: any;
   //@ts-ignore
