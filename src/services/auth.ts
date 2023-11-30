@@ -1,5 +1,4 @@
 import { authAPI } from '../api/auth';
-import { UserDTO } from '../api/types';
 import type { Dispatch } from '../core/Store';
 import { AppState } from '../store';
 import { transformUser, apiHasError } from '../utils';
@@ -21,7 +20,7 @@ type SignUpPayload = {
 
 export const login = async (
   dispatch: Dispatch<AppState>,
-  state: AppState,
+  _state: AppState,
   action: LoginPayload,
 ) => {
   dispatch({ isLoading: true });
@@ -55,7 +54,7 @@ export const login = async (
 
 export const signUp = async (
   dispatch: Dispatch<AppState>,
-  state: AppState,
+  _state: AppState,
   action: SignUpPayload,
 ) => {
   dispatch({ isLoading: true });

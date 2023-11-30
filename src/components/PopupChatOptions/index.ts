@@ -2,7 +2,6 @@ import Block from '../../core/Block';
 import template from './popupChatOptions.hbs';
 import addPopup from '../../assets/add-settings.svg';
 import closePopup from '../../assets/close-settings.svg'
-import trashPopup from '../../assets/trash.svg'
 import { Button } from '../Button';
 
 interface PopupChatOptionsProps {

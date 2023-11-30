@@ -8,8 +8,8 @@ export const profileData = {
             value: '',
             placeholder: 'Почта',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,
@@ -23,8 +23,8 @@ export const profileData = {
             value: '',
             placeholder: 'Логин',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,
@@ -38,8 +38,8 @@ export const profileData = {
             value: '',
             placeholder: 'Имя',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,
@@ -53,8 +53,8 @@ export const profileData = {
             value: '',
             placeholder: 'Фамилия',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,
@@ -68,8 +68,8 @@ export const profileData = {
             value: '',
             placeholder: 'Имя в чате',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,
@@ -83,8 +83,8 @@ export const profileData = {
             value: '',
             placeholder: 'Телефон',
             events: {
-                change: (evt) => {
-                    const value = evt.target.value;
+                change: (_evt: Event) => {
+                    // const value = evt.target.value;
                 },
             },
             readonly: true,

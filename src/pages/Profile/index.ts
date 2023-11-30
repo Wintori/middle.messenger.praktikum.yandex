@@ -24,6 +24,7 @@ class ProfilePage extends Block {
     this.props.image = window.store.getState().user?.avatar;
     this.props.profileInputs = profileData.profileInputs;
     this.props.backImage = backImage;
+    //@ts-ignore
     this.children.profileInputs = this.props.profileInputs.map((props: any) => new Input({ ...props, value: window.store.getState()?.user[props.name] }));
 
     this.children.buttonBack = new Button({
@@ -81,5 +82,5 @@ class ProfilePage extends Block {
     return this.compile(template, this.props);
   }
 }
-
+//@ts-ignore
 export default withRouter(withStore(ProfilePage))

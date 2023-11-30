@@ -1,5 +1,4 @@
 import { userAPI } from '../api/user';
-import { UserDTO } from '../api/types';
 import type { Dispatch } from '../core/Store';
 import { AppState } from '../store';
 import { transformUser, apiHasError } from '../utils';

@@ -10,10 +10,11 @@ import Error500 from './pages/Error500';
 
 export const router = new PathRouter('#app')
 
-export function initRouter(store) {
+export function initRouter(store: any) {
   router
     .use({
       pathname: '/',
+      //@ts-ignore
       block: Login,
       needAuth: true,
       redirectPath: '/messenger',
@@ -21,6 +22,7 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/sign-up',
+      //@ts-ignore
       block: Registration,
       needAuth: true,
       redirectPath: '/messenger',
@@ -28,6 +30,7 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/messenger',
+      //@ts-ignore
       block: Chat,
       needAuth: true,
       redirectPath: '/',
@@ -35,6 +38,7 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/settings',
+      //@ts-ignore
       block: Profile,
       needAuth: true,
       redirectPath: '/',
@@ -42,6 +46,7 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/settings/updateUser',
+      //@ts-ignore
       block: ProfileChange,
       needAuth: true,
       redirectPath: '/',
@@ -49,6 +54,7 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/settings/changePassword',
+      //@ts-ignore
       block: ProfileChangePassword,
       needAuth: true,
       redirectPath: '/',
@@ -56,10 +62,12 @@ export function initRouter(store) {
     })
     .use({
       pathname: '/500',
+      //@ts-ignore
       block: Error500
     })
     .use({
       pathname: '*',
+      //@ts-ignore
       block: Error404,
     })
     .start();

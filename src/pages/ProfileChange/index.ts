@@ -332,5 +332,5 @@ class ProfileChange extends Block {
     return this.compile(template, this.props);
   }
 }
-
+//@ts-ignore
 export default withRouter(withStore(ProfileChange))

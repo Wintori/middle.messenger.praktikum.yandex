@@ -178,7 +178,6 @@ class RegistrationPage extends Block {
           evt.preventDefault();
           const login = ((this.children.inputLogin as Block).element?.firstElementChild as HTMLInputElement).value;
           const password = ((this.children.inputPassword as Block).element?.firstElementChild as HTMLInputElement).value;
-          const passwordRepeat = ((this.children.inputPasswordRepeat as Block).element?.firstElementChild as HTMLInputElement).value;
           const email = ((this.children.inputEmail as Block).element?.firstElementChild as HTMLInputElement).value;
           const name = ((this.children.inputName as Block).element?.firstElementChild as HTMLInputElement).value;
           const surname = ((this.children.inputSurname as Block).element?.firstElementChild as HTMLInputElement).value;
@@ -320,5 +319,5 @@ class RegistrationPage extends Block {
     return this.compile(template, this.props);
   }
 }
-
+//@ts-ignore
 export default withRouter(withStore(RegistrationPage))

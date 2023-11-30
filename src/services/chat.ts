@@ -1,5 +1,5 @@
 import { chatAPI } from '../api/chat';
-import { ChatDTO, UserDTO } from '../api/types';
+import { UserDTO } from '../api/types';
 import type { Dispatch } from '../core/Store';
 import { AppState } from '../store';
 import { apiHasError } from '../utils';
@@ -7,16 +7,6 @@ import { transformChats, transformChat, Chat } from '../utils/apiTransformers';
 import { websocketService } from '../core/WebSocket';
 import { router } from '../router'
 import { userAPI } from '../api/user';
-
-
-type ChangePayload = {
-    first_name: string;
-    second_name: string;
-    display_name: string;
-    login: string;
-    email: string;
-    phone: string;
-}
 
 type GetAllChats = {
     offset?: number;
@@ -39,7 +29,7 @@ type AddOrRemoveUsersPayload = {
 
 export const getAllChats = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: GetAllChats,
 ) => {
     dispatch({ isLoading: true });
@@ -63,7 +53,7 @@ export const getAllChats = async (
 
 export const createChat = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: CreateChat,
 ) => {
     dispatch({ isLoading: true });
@@ -80,6 +70,7 @@ export const createChat = async (
         dispatch({ isLoading: false, loginFormError: null });
         const currentChats = window.store.getState().chats;
         const newChat = {
+            //@ts-ignore
             id: response.id,
             avatar: "",
             createdBy: window.store.getState().user?.id,
@@ -99,7 +90,7 @@ export const createChat = async (
 
 export const removeChat = async (
     dispatch: Dispatch<AppState>,
-    state: AppState,
+    _state: AppState,
     action: RemoveChat,
 ) => {
     dispatch({ isLoading: true });
@@ -127,7 +118,7 @@ export const removeChat = async (
 export const getOldMessages = async (
     dispatch: Dispatch<AppState>,
     _state: AppState,
-    action: string
+    _action: string
 ) => {
     try {
         if (!websocketService.getSocket) {
@@ -180,7 +171,7 @@ export const addUser = async (
             router.go('/500');
             return;
         }
-
+        //@ts-ignore
         const userId = Number((responseSearch[0] as UserDTO).id);
         const response = await chatAPI.addUsersToChat({ users: [userId], chatId: action.chatId });
 
@@ -213,7 +204,7 @@ export const removeUser = async (
             router.go('/500');
             return;
         }
-
+        //@ts-ignore
         const userId = Number((responseSearch[0] as UserDTO).id);
         const response = await chatAPI.deleteUsersFromChat({ users: [userId], chatId: action.chatId });
 

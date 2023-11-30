@@ -1,4 +1,5 @@
 export type APIRequest<T> = {
+  token: any;
   response: T;
   reason: string;
 };

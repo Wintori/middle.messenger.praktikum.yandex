@@ -36,7 +36,7 @@ class ChatBar extends Block {
 				{
 					...props,
 					events: {
-						click: (evt) => {
+						click: (_evt: MouseEvent) => {
 							this.props.onClickMessageHandler(props);
 						},
 					}
@@ -105,7 +105,7 @@ class ChatBar extends Block {
 				{
 					...props,
 					events: {
-						click: (evt) => {
+						click: (_evt) => {
 							this.props.onClickMessageHandler(props);
 						},
 					}
@@ -118,5 +118,5 @@ class ChatBar extends Block {
 		return this.compile(template, this.props);
 	}
 }
-
+//@ts-ignore
 export default withRouter(withStore(ChatBar))

@@ -98,5 +98,5 @@ class ChatHeader extends Block {
     return this.compile(template, { ...this.props, userAvatar: this.userAvatar, userName: this.userName });
   }
 }
-
+//@ts-ignore
 export default withRouter(withStore(ChatHeader))

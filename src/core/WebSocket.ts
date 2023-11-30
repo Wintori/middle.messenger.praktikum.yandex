@@ -1,6 +1,6 @@
 import { chatAPI } from "../api/chat";
 import { transformMessages, transformMessage } from "../utils/apiTransformers";
-import { Months, groupMessagesByDay } from "../utils/dateGrouping";
+import { groupMessagesByDay } from "../utils/dateGrouping";
 
 
 export default class WebSocketService {
@@ -110,8 +110,8 @@ export default class WebSocketService {
         messages[0].messages.unshift({ ...transformedData, chatId: window.store.getState().activeChat!.id, isRead: true })
       } else {
 
-        const date = new Date(transformedData.time);
-        const day = `${date.getDate()} ${Months[date.getMonth()]}`;
+        // const date = new Date(transformedData.time);
+        // const day = `${date.getDate()} ${Months[date.getMonth()]}`;
         messages = groupMessagesByDay(new Array({ ...transformedData, chatId: window.store.getState().activeChat!.id, isRead: true }))
 
       }
