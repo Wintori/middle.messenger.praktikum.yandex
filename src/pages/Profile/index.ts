@@ -1,74 +1,86 @@
-import Block from "../../utils/Block";
+import Block from "../../core/Block";
 import template from './profile.hbs'
 import backImage from '../../assets/button-back.svg'
 import { Button } from "../../components/Button";
-import { Input, InputProps } from "../../components/input/input";
+import { Input } from "../../components/input/input";
+import { withRouter } from "../../utils/withRouter";
+import { withStore } from "../../utils/withStore";
+import { profileData } from "../../utils/data";
+import { logout } from "../../services/auth";
 
 interface ProfilePageProps {
-    profileInputs: InputProps[],
-    userName: string,
+  image?: string;
 }
 
-export class ProfilePage extends Block {
-    constructor(props: ProfilePageProps) {
-        super(props)
+class ProfilePage extends Block {
+  constructor(props: ProfilePageProps) {
+    super(props);
+    if (!this.props.store.state.user) {
+      this.props.router.go('/')
     }
-    protected init(): void {
-        this.props.backImage = backImage;
+  }
+  protected init(): void {
+    this.props.userName = window.store.getState().user!.displayName ? window.store.getState().user!.displayName : window.store.getState().user!.firstName + ' ' + window.store.getState().user!.secondName;
+    this.props.image = window.store.getState().user?.avatar;
+    this.props.profileInputs = profileData.profileInputs;
+    this.props.backImage = backImage;
+    //@ts-ignore
+    this.children.profileInputs = this.props.profileInputs.map((props: any) => new Input({ ...props, value: window.store.getState()?.user[props.name] }));
 
-        this.children.profileInputs = this.props.profileInputs.map((props: any) => new Input(props))
+    this.children.buttonBack = new Button({
+      events: {
+        click: (evt: PointerEvent) => {
+          evt.preventDefault();
 
-        this.children.buttonBack = new Button({
-            events: {
-                click: (evt: PointerEvent) => {
-                    evt.preventDefault();
-                    window.location.pathname = "/chat";
-                }
-            },
-            buttonStyle: 'button__close-profile',
-            type: 'button',
-            image: backImage,
-            imageStyle: 'profile__back-image'
-        })
+          this.props.router.go('/messenger')
+        }
+      },
+      buttonStyle: 'button__close-profile',
+      type: 'button',
+      image: backImage,
+      imageStyle: 'profile__back-image'
+    })
 
-        this.children.buttonChange = new Button({
-            events: {
-                click: (evt: PointerEvent) => {
-                    evt.preventDefault();
-                    window.location.pathname = '/profile/change'
-                }
-            },
-            buttonStyle: 'button__change-data',
-            type: 'button',
-            label: 'Изменить данные'
-        })
+    this.children.buttonChange = new Button({
+      events: {
+        click: (evt: PointerEvent) => {
+          evt.preventDefault();
+          this.props.router.go('/settings/updateUser')
+        }
+      },
+      buttonStyle: 'button__change-data',
+      type: 'button',
+      label: 'Изменить данные'
+    })
 
-        this.children.buttonPassword = new Button({
-            events: {
-                click: (evt: PointerEvent) => {
-                    evt.preventDefault();
-                    window.location.pathname = '/profile/changePassword'
-                }
-            },
-            buttonStyle: 'button__change-password',
-            type: 'button',
-            label: 'Изменить пароль'
-        })
+    this.children.buttonPassword = new Button({
+      events: {
+        click: (evt: PointerEvent) => {
+          evt.preventDefault();
+          this.props.router.go('/settings/changePassword')
+        }
+      },
+      buttonStyle: 'button__change-password',
+      type: 'button',
+      label: 'Изменить пароль'
+    })
 
-        this.children.buttonExit = new Button({
-            events: {
-                click: (evt: PointerEvent) => {
-                    evt.preventDefault();
-                    window.location.pathname = '/login'
-                }
-            },
-            buttonStyle: 'button__exit',
-            type: 'button',
-            label: 'Выйти'
-        })
-    }
+    this.children.buttonExit = new Button({
+      events: {
+        click: (evt: PointerEvent) => {
+          evt.preventDefault();
+          window.store.dispatch(logout)
+        }
+      },
+      buttonStyle: 'button__exit',
+      type: 'button',
+      label: 'Выйти'
+    })
+  }
 
-    protected render(): DocumentFragment {
-        return this.compile(template, this.props);
-    }
+  protected render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
 }
+//@ts-ignore
+export default withRouter(withStore(ProfilePage))

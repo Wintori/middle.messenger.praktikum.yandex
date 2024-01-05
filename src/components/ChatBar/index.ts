@@ -1,57 +1,122 @@
-import Block from '../../utils/Block';
+import Block from '../../core/Block';
 import { Button } from '../Button';
 import { Input } from '../input/input';
 import template from './chatBar.hbs'
 import buttonProfileImage from '../../assets/arrow.svg';
-import { BarMessage, BarMessageProps } from '../BarMessage';
+import createNewImage from '../../assets/create-new.svg'
+import settingsImage from '../../assets/burger.svg'
+import { BarMessage } from '../BarMessage';
+import { Chat } from '../../utils/apiTransformers';
+import { PathRouter } from '../../core';
+import { withRouter } from '../../utils/withRouter';
+import { PopupChatOptions } from '../PopupChatOptions';
+import { withStore } from '../../utils/withStore';
 
 
 interface ChatBarInterface {
-    barMessages: BarMessageProps[]
+	barMessages?: Chat[] | null;
+	settingsHandler: () => void;
+	onClickMessageHandler: (id: number) => void;
+	addChatHandler: () => void;
+	router: PathRouter;
 }
 
 
-export class ChatBar extends Block {
-    constructor(props: ChatBarInterface) {
-        super(props);
-    }
+class ChatBar extends Block {
+	constructor(props: ChatBarInterface) {
+		super(props);
+	}
 
-    init() {
-        this.children.barMessages = this.props.barMessages.map((props: any) => new BarMessage(props))
+	init() {
 
+		this.props.barMessages = window.store.getState().chats;
 
-        this.children.inputSearch = new Input({
-            type: "search",
-            events: {
-                change: (evt) => {
-                    const value = evt.target.value;
-                    (this.children.inputSearch as Block).setProps({ value })
-                },
-            }, 
-            label: '',
-            value: this.props.search,
-            labelStyle: '',
-            inputStyle: 'chat-bar__inputSearch',
-            errorStyle: 'login__input-error',
-            placeholder: 'Поиск',
-        });
+		this.children.barMessagesComponent = this.props.barMessages
+			?.map((props: Chat) => new BarMessage(
+				{
+					...props,
+					events: {
+						click: (_evt: MouseEvent) => {
+							this.props.onClickMessageHandler(props);
+						},
+					}
+				})) ?? [];
 
-        this.children.buttonProfile = new Button({
-            label: 'Профиль',
-            events: {
-                click: (evt: PointerEvent) => {
-                    evt.preventDefault();
-                    window.location.pathname = '/profile'
-                }
-            },
-            buttonStyle: 'button__profile',
-            image: buttonProfileImage,
-            type: 'button'
-          });
-    }
+		this.children.inputSearch = new Input({
+			type: "search",
+			events: {
+				change: (evt) => {
+					const value = evt.target.value;
+					(this.children.inputSearch as Block).setProps({ value });
+				},
+			},
+			label: '',
+			value: this.props.search,
+			labelStyle: '',
+			inputStyle: 'chat-bar__inputSearch',
+			errorStyle: 'login__input-error',
+			placeholder: 'Поиск',
+		});
 
-    render() {
-        // В проект должен быть ваш собственный шаблонизатор
-        return this.compile(template, this.props);
-    }
+		this.children.buttonCreate = new Button({
+			events: {
+				click: (evt: PointerEvent) => {
+					evt.preventDefault();
+					this.props.addChatHandler();
+					this.props.barMessages = window.store.getState().chats;
+				}
+			},
+			imageStyle: 'button__create-new',
+			image: createNewImage,
+			type: 'button'
+		})
+
+		this.children.buttonOptions = new Button({
+			events: {
+				click: (evt: PointerEvent) => {
+					evt.preventDefault();
+					this.children.popupOptions.setProps({ isDisabled: !this.children.popupOptions.getProps().isDisabled });
+				}
+			},
+			imageStyle: 'button&__bar-options',
+			image: settingsImage,
+			type: 'button'
+		})
+
+		this.children.buttonProfile = new Button({
+			label: 'Профиль',
+			events: {
+				click: (evt: PointerEvent) => {
+					evt.preventDefault();
+					this.props.settingsHandler();
+				}
+			},
+			buttonStyle: 'button__profile',
+			image: buttonProfileImage,
+			type: 'button'
+		});
+
+		this.children.popupOptions = new PopupChatOptions({ isDisabled: true });
+	}
+
+	componentDidUpdate(): boolean {
+		this.children.barMessagesComponent = this.props.barMessages
+			?.map((props: Chat) => new BarMessage(
+				{
+					...props,
+					events: {
+						click: (_evt) => {
+							this.props.onClickMessageHandler(props);
+						},
+					}
+				})) ?? [];
+
+		return true;
+	}
+
+	render() {
+		return this.compile(template, this.props);
+	}
 }
+//@ts-ignore
+export default withRouter(withStore(ChatBar))

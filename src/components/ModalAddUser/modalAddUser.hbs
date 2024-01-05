@@ -1,7 +1,7 @@
-<div class="modal-overlay">
+<div class="modal-overlay {{#if isDisabled}}hide{{/if}}">
     <div class="modal">
         <div class="modal-add-user">
-            <h1 class="modal-add-user__title">{{title}}</h1>
+            <h1 class="modal-add-user__title">Добавить пользователя</h1>
             {{{inputLogin}}}
             {{{buttonAdd}}}
         </div>

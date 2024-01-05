@@ -1,29 +1,29 @@
-import Block from '../../utils/Block';
+import Block from '../../core/Block';
 import template from './button.hbs';
 
 interface ButtonProps {
-    type?: string;
-    label?: string;
-    events?: {
-      click?: (evt: PointerEvent) => void;
-    };
-    buttonStyle?: string;
-    image?: string;
-    imageStyle?: string;
-  }
+  type?: string;
+  label?: string;
+  events?: {
+    click?: (evt: PointerEvent) => void;
+  };
+  buttonStyle?: string;
+  image?: string;
+  imageStyle?: string;
+  textStyle?: string;
+  isTextRightSide?: boolean;
+}
 
 export class Button extends Block {
-    constructor(props: ButtonProps) {
-        // Создаём враппер дом-элемент button
-        super(props);
+  constructor(props: ButtonProps) {
+    super(props);
 
-        let list = this.element!.className.split(" ");
-        list.splice(0, 0, "button")
-        this.element!.className = list.join(" ");
-    }
+    let list = this.element!.className.split(" ");
+    list.splice(0, 0, "button")
+    this.element!.className = list.join(" ");
+  }
 
-    render() {
-        // В проект должен быть ваш собственный шаблонизатор
-        return this.compile(template, this.props);
-    }
+  render() {
+    return this.compile(template, this.props);
+  }
 }

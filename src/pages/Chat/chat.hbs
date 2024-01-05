@@ -1,24 +1,27 @@
 <main class="container">
-    {{{chatBar}}}
-    <section class="chat">
-        <div class="chat__content">
-            {{{chatHeader}}}
-            <div class="chat__messages">
-                {{#each chatMessagesGroups}}
-                {{{this}}}
-                {{/each}}
-            </div>
-            <div class="chat__footer">
-                <div class="chat__footer__button-container">
-                    {{{buttonUpload}}}
-                </div>
-                <form class="chat__footer__form">
-                    {{!-- Решение не использовать стандартный input обусловлено удобством и красотой для ввода
-                    многострочного текста --}}
-                    {{{inputMessage}}}
-                    {{{buttonSend}}}
-                </form>
-            </div>
+  {{{chatBar}}}
+  <section class="chat">
+    {{#if currentChat}}
+      <div class="chat__content">
+        {{{chatHeader}}}
+        {{{chatContent}}}
+        <div class="chat__footer">
+          <div class="chat__footer__button-container">
+            {{{buttonUpload}}}
+            {{{popupUpload}}}
+          </div>
+          <form class="chat__footer__form">
+            {{{inputMessage}}}
+            {{{buttonSend}}}
+          </form>
         </div>
-    </section>
+      </div>
+    {{else}}
+      <p class="chat__noChosenChatText">Выберите чат чтобы отправить сообщение</p>
+    {{/if}}
+  </section>
+  {{{modalAddUser}}}
+  {{{modalDeleteUser}}}
+  {{{modalAddChat}}}
+  {{{modalUploadChatAvatar}}}
 </main>
